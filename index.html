@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دروس التجويد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f1f4f7; --surface: #ffffff; --fg: #162033; --muted: #566277; --line: #d6dce6;
+  --accent: #1b6a65; --accent-soft: #e1f0ee; --gold: #8f630a;
+  --font-display: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-body: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1521; --surface: #172030; --fg: #e8edf5; --muted: #9ba7ba; --line: #2a3548;
+    --accent: #4fc2b8; --accent-soft: #123130; --gold: #e3b24d;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-body);
+  font-size: 16px; line-height: 1.75; padding-inline: 16px; padding-block: 28px 48px;
+}
+.wrap { max-width: 640px; margin-inline: auto; display: flex; flex-direction: column; gap: 22px; }
+.kicker { font-size: 13px; letter-spacing: .04em; color: var(--gold); font-weight: 600; }
+h1 { font-family: var(--font-display); font-size: 34px; line-height: 1.4; margin: 0; font-weight: 700; text-wrap: balance; }
+.sub { color: var(--muted); margin: 4px 0 0; font-size: 15.5px; }
+.list { display: flex; flex-direction: column; gap: 12px; }
+a.lesson {
+  display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--fg);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-height: 76px;
+}
+a.lesson:hover { border-color: var(--accent); background: var(--accent-soft); }
+a.lesson:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.num {
+  flex: none; width: 46px; height: 46px; border-radius: 99px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); font-family: var(--font-display); font-size: 26px; font-weight: 700;
+}
+.txt { min-width: 0; display: flex; flex-direction: column; }
+.t { font-size: 18px; font-weight: 600; line-height: 1.6; }
+.m { font-size: 14px; color: var(--muted); }
+.go { margin-inline-start: auto; color: var(--accent); font-size: 22px; flex: none; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <span class="kicker">تمارين تفاعلية</span>
+    <h1>دروس التجويد</h1>
+    <p class="sub">اختر الدرس، وحلّ التمرين، ثم أرسل نتيجتك إلى المعلم.</p>
+  </header>
+  <nav class="list" aria-label="دروس التجويد">
+    <a class="lesson" href="lesson1.html">
+      <span class="num">١</span>
+      <span class="txt"><span class="t">الاستعاذة والبسملة وتعريف التجويد واللحون</span><span class="m">١٨ سؤالاً</span></span>
+      <span class="go" aria-hidden="true">‹</span>
+    </a>
+    <a class="lesson" href="lesson2.html">
+      <span class="num">٢</span>
+      <span class="txt"><span class="t">أحكام النون الساكنة والتنوين</span><span class="m">١٩ سؤالاً</span></span>
+      <span class="go" aria-hidden="true">‹</span>
+    </a>
+    <a class="lesson" href="lesson3.html">
+      <span class="num">٣</span>
+      <span class="txt"><span class="t">أحكام الميم الساكنة</span><span class="m">١٦ سؤالاً</span></span>
+      <span class="go" aria-hidden="true">‹</span>
+    </a>
+    <a class="lesson" href="lesson4.html">
+      <span class="num">٤</span>
+      <span class="txt"><span class="t">المدود</span><span class="m">١٩ سؤالاً</span></span>
+      <span class="go" aria-hidden="true">‹</span>
+    </a>
+  </nav>
+</main>
+</body>
+</html>
