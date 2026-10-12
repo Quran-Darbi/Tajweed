@@ -1,8 +1,13 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>تمارين الاستعاذة والبسملة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* التخطيط: عمود واحد ضيق للهاتف، بطاقة سؤال واحدة في كل مرة، شريط تقدم في الأعلى */
+/* التخطيط: عمود واحد ضيق للهاتف، زر الرئيسية في الأعلى، بطاقة سؤال واحدة، وتحتها زرا السابق والتالي */
 :root {
   --bg: #f1f4f7;
   --surface: #ffffff;
@@ -35,12 +40,21 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
 body {
   background: var(--bg); color: var(--fg);
   font-family: var(--font-body); font-size: 16px; line-height: 1.75;
-  direction: rtl; padding-inline: 16px; padding-block: 20px 40px;
+  direction: rtl; padding-inline: 16px; padding-block: 16px 40px;
 }
 .wrap { max-width: 640px; margin-inline: auto; display: flex; flex-direction: column; gap: 16px; }
+.flow { display: flex; flex-direction: column; gap: 16px; }
+.topbar { display: flex; justify-content: flex-start; }
+.home { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); text-decoration: none; font-weight: 600; font-size: 15px; }
+.home svg { flex: none; color: var(--accent); }
+.home:hover { border-color: var(--accent); background: var(--accent-soft); }
+.home:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.leave { border-color: var(--bad); }
 .head { display: flex; flex-direction: column; gap: 4px; }
 .kicker { font-size: 13px; letter-spacing: .04em; color: var(--gold); font-weight: 600; }
 h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.4; margin: 0; text-wrap: balance; font-weight: 700; }
@@ -59,7 +73,10 @@ button, a.btn { font: inherit; cursor: pointer; }
 .btn { display: inline-flex; align-items: center; justify-content: center; text-align: center; gap: 8px; min-height: 48px; padding: 10px 20px; border-radius: 12px; border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-fg); font-weight: 600; font-size: 16px; text-decoration: none; }
 .btn.ghost { background: transparent; color: var(--accent); }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
-.btn:focus-visible, .opt:focus-visible, .chip:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.btn:focus-visible, .opt:focus-visible, .chip:focus-visible, .wrow:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.nav .btn { width: 100%; }
+.revbar { display: flex; justify-content: space-between; color: var(--gold); font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
 .opts { display: flex; flex-direction: column; gap: 10px; }
 .opt { text-align: right; min-height: 52px; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); font-size: 17px; line-height: 1.7; }
 .opt:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
@@ -90,11 +107,11 @@ button, a.btn { font: inherit; cursor: pointer; }
 .score { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .score .big { font-family: var(--font-display); font-size: 56px; line-height: 1.2; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
 .score .of { font-size: 20px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.review { display: flex; flex-direction: column; gap: 12px; }
-.rev { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
-.rev .rn { font-size: 13px; color: var(--bad); font-weight: 600; }
-.rev p { margin: 0; font-size: 15.5px; }
-.rev .good { color: var(--good); font-weight: 600; }
+.review { display: flex; flex-direction: column; gap: 10px; }
+.wrow { display: flex; flex-direction: column; gap: 2px; text-align: right; width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); }
+.wrow:hover { border-color: var(--accent); background: var(--accent-soft); }
+.wrow .rn { font-size: 13px; color: var(--bad); font-weight: 600; }
+.wrow .wq { font-size: 15.5px; line-height: 1.8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .actions { display: flex; flex-direction: column; gap: 10px; }
 textarea.msg { width: 100%; min-height: 120px; font: inherit; font-size: 15px; line-height: 1.8; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); resize: vertical; }
 h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 700; }
@@ -102,6 +119,19 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
 </style>
 
 <div class="wrap" id="app">
+  <div class="topbar">
+    <a class="home" id="home" href="./">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5.5h4V20"/></svg>
+      <span>الصفحة الرئيسية</span>
+    </a>
+  </div>
+  <div class="card leave" id="leave" role="alertdialog" aria-labelledby="leave-t" hidden>
+    <p class="qtext" id="leave-t">هل تريد مغادرة التمرين؟ ستفقد إجاباتك حتى الآن.</p>
+    <div class="nav">
+      <a class="btn" href="./">مغادرة</a>
+      <button class="btn ghost" id="stay" type="button">متابعة التمرين</button>
+    </div>
+  </div>
   <header class="head">
     <span class="kicker">الدرس ١</span>
     <h1>أحكام الاستعاذة والبسملة وتعريف التجويد واللحون</h1>
@@ -117,7 +147,11 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
   var TEACHER_PHONE = "";
 
   var stage = document.getElementById("stage");
-  var name = "", qs = [], i = 0, log = [];
+  var homeLink = document.getElementById("home");
+  var leaveBox = document.getElementById("leave");
+  var stayBtn = document.getElementById("stay");
+  var name = "", qs = [], i = 0, mode = "quiz";
+  var res = [], cards = [], resultsNode = null, finished = false, reviewList = [], navNext = null;
 
   function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
   function fmt(s) { return esc(s).replace(/«([^»]+)»/g, '<span class="ayah">$1</span>'); }
@@ -126,13 +160,26 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
   function shuffle(a) { var b = a.slice(); for (var k = b.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = b[k]; b[k] = b[j]; b[j] = t; } return b; }
   function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
   function mount(node) { stage.replaceChildren(node); }
+  function flow() { return el('<div class="flow"></div>'); }
+  function toTop() { window.scrollTo({ top: 0, behavior: "smooth" }); }
+
+  /* ---------- زر الصفحة الرئيسية: يسأل أولاً إن كان الطالب في منتصف التمرين ---------- */
+  homeLink.addEventListener("click", function (e) {
+    var inProgress = !finished && res.some(function (r) { return r; });
+    if (!inProgress) return;
+    e.preventDefault();
+    leaveBox.hidden = false;
+    leaveBox.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    stayBtn.focus({ preventScroll: true });
+  });
+  stayBtn.addEventListener("click", function () { leaveBox.hidden = true; });
 
   /* ---------- البداية ---------- */
   function start() {
     var n = DATA.length;
     var card = el(
       '<section class="card">' +
-      '<p class="sub">' + ar(n) + ' سؤالاً في هذا الدرس، وتظهر الإجابة الصحيحة مع الشرح بعد كل سؤال. في آخر التمرين تُرسل نتيجتك إلى المعلم.</p>' +
+      '<p class="sub">' + ar(n) + ' سؤالاً في هذا الدرس، وتظهر الإجابة الصحيحة مع الشرح بعد كل سؤال. تستطيع الرجوع إلى الأسئلة السابقة، وفي آخر التمرين تُرسل نتيجتك إلى المعلم.</p>' +
       '<div><label class="lbl" for="nm">اكتب اسمك</label>' +
       '<input type="text" id="nm" autocomplete="name" placeholder="الاسم الكامل" maxlength="60"></div>' +
       '<button class="btn" id="go" disabled>ابدأ التمرين</button>' +
@@ -142,48 +189,70 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
     var inp = card.querySelector("#nm"), go = card.querySelector("#go");
     inp.addEventListener("input", function () { go.disabled = inp.value.trim().length < 2; });
     inp.addEventListener("keydown", function (e) { if (e.key === "Enter" && !go.disabled) go.click(); });
-    go.addEventListener("click", function () {
-      name = inp.value.trim(); qs = DATA.slice(); i = 0; log = []; showQ();
-    });
+    go.addEventListener("click", function () { name = inp.value.trim(); begin(false); });
+  }
+  function begin(shuffled) {
+    qs = shuffled ? shuffle(DATA) : DATA.slice();
+    i = 0; res = []; cards = []; resultsNode = null; finished = false; reviewList = [];
+    leaveBox.hidden = true;
+    show(0);
   }
 
-  /* ---------- شريط التقدم ---------- */
-  function top() {
-    return '<div><div class="meta"><span>السؤال ' + ar(i + 1) + ' من ' + ar(qs.length) + '</span><span>' + esc(name) + '</span></div>' +
-      '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + qs.length + '" aria-valuenow="' + i + '"><i style="width:' + (i / qs.length * 100) + '%"></i></div></div>';
+  /* ---------- بطاقة السؤال ---------- */
+  function top(idx) {
+    return '<div><div class="meta"><span>السؤال ' + ar(idx + 1) + ' من ' + ar(qs.length) + '</span><span>' + esc(name) + '</span></div>' +
+      '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + qs.length + '" aria-valuenow="' + idx + '"><i style="width:' + (idx / qs.length * 100) + '%"></i></div></div>';
   }
-  function nextBtn(card, cb) {
-    var last = i === qs.length - 1;
-    var b = el('<button class="btn">' + (last ? "عرض النتيجة" : "السؤال التالي") + '</button>');
-    b.addEventListener("click", cb);
-    card.appendChild(b);
-    b.focus({ preventScroll: true });
-    b.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }
-  function advance() { i++; if (i >= qs.length) finish(); else showQ(); }
   function feedback(card, ok, extra, why) {
     var f = el('<div class="fb ' + (ok ? "ok" : "no") + '" role="status"><b>' + (ok ? "أحسنت، إجابة صحيحة" : "إجابة غير صحيحة") + '</b>' + (extra ? '<div>' + extra + '</div>' : "") + (why ? '<div>' + fmt(why) + '</div>' : "") + '</div>');
     card.appendChild(f);
   }
-
-  function showQ() {
-    var q = qs[i];
+  // تسجيل إجابة سؤال، وإظهار التصحيح، وتفعيل زر «التالي»
+  function record(card, idx, r, extra) {
+    res[idx] = r;
+    feedback(card, r.ok, extra, r.why);
+    if (idx === i && mode === "quiz" && navNext) {
+      navNext.disabled = false;
+      navNext.focus({ preventScroll: true });
+      navNext.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }
+  function buildCard(idx) {
+    var q = qs[idx];
     var typeLabel = { mcq: "اختيار من متعدد", tf: "صح أم خطأ", match: "وصل", order: "ترتيب" }[q.t];
-    var card = el('<section class="card">' + top() + '<span class="qtype">' + typeLabel + '</span><p class="qtext">' + fmt(q.q) + '</p></section>');
-    mount(card);
-    if (q.t === "mcq" || q.t === "tf") mcq(card, q);
-    else if (q.t === "match") match(card, q);
-    else order(card, q);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    var card = el('<section class="card">' + top(idx) + '<span class="qtype">' + typeLabel + '</span><p class="qtext">' + fmt(q.q) + '</p></section>');
+    if (q.t === "mcq" || q.t === "tf") mcq(card, q, idx);
+    else if (q.t === "match") match(card, q, idx);
+    else order(card, q, idx);
+    cards[idx] = card; // تبقى البطاقة محفوظة بحالتها لتعاد عند الرجوع إليها
+    return card;
+  }
+  function show(idx) {
+    mode = "quiz"; i = idx;
+    var card = cards[idx] || buildCard(idx);
+    var last = idx === qs.length - 1;
+    var wrap = flow();
+    wrap.appendChild(card);
+    var bar = el('<div class="nav"><button class="btn ghost" type="button">السابق</button><button class="btn" type="button"></button></div>');
+    var prev = bar.children[0], next = bar.children[1];
+    next.textContent = last ? "عرض النتيجة" : "التالي";
+    prev.disabled = idx === 0;
+    next.disabled = !res[idx];
+    prev.addEventListener("click", function () { show(idx - 1); });
+    next.addEventListener("click", function () { if (last) finish(); else show(idx + 1); });
+    navNext = next;
+    wrap.appendChild(bar);
+    mount(wrap);
+    toTop();
   }
 
   /* ---------- اختيار من متعدد وصح/خطأ ---------- */
-  function mcq(card, q) {
+  function mcq(card, q, idx) {
     var opts = q.o.map(function (t, k) { return { t: t, ok: k === q.a }; });
     if (q.t === "mcq") opts = shuffle(opts);
     var wrap = el('<div class="' + (q.t === "tf" ? "tfrow" : "opts") + '"></div>');
     var btns = opts.map(function (o) {
-      var b = el('<button class="opt">' + fmt(o.t) + '</button>');
+      var b = el('<button class="opt" type="button">' + fmt(o.t) + '</button>');
       wrap.appendChild(b);
       return b;
     });
@@ -194,15 +263,14 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
         var ok = opts[k].ok;
         if (!ok) b.classList.add("no");
         var correct = opts.filter(function (o) { return o.ok; })[0].t;
-        log.push({ n: i + 1, q: q.q, ok: ok, chosen: opts[k].t, correct: correct, why: q.why });
-        feedback(card, ok, ok ? "" : 'الإجابة الصحيحة: ' + fmt(correct), q.why);
-        nextBtn(card, advance);
+        record(card, idx, { n: idx + 1, q: q.q, ok: ok }, ok ? "" : 'الإجابة الصحيحة: ' + fmt(correct));
+        res[idx].why = q.why;
       });
     });
   }
 
   /* ---------- وصل ---------- */
-  function match(card, q) {
+  function match(card, q, idx) {
     var n = q.pairs.length, done = 0, mistakes = 0, sel = null;
     var L = q.pairs.map(function (p, k) { return { k: k, t: p[0] }; });
     var R = shuffle(q.pairs.map(function (p, k) { return { k: k, t: p[1] }; }));
@@ -210,8 +278,8 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
     var cols = el('<div class="cols"><div class="col" id="lc"></div><div class="col" id="rc"></div></div>');
     card.appendChild(cols);
     var lc = cols.querySelector("#lc"), rc = cols.querySelector("#rc");
-    var lb = L.map(function (o) { var b = el('<button class="chip">' + fmt(o.t) + '</button>'); b.dataset.k = o.k; lc.appendChild(b); return b; });
-    var rb = R.map(function (o) { var b = el('<button class="chip">' + fmt(o.t) + '</button>'); b.dataset.k = o.k; rc.appendChild(b); return b; });
+    var lb = L.map(function (o) { var b = el('<button class="chip" type="button">' + fmt(o.t) + '</button>'); b.dataset.k = o.k; lc.appendChild(b); return b; });
+    var rb = R.map(function (o) { var b = el('<button class="chip" type="button">' + fmt(o.t) + '</button>'); b.dataset.k = o.k; rc.appendChild(b); return b; });
     lb.forEach(function (b) {
       b.addEventListener("click", function () {
         if (b.classList.contains("done")) return;
@@ -234,15 +302,12 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
     });
     function finishMatch() {
       var ok = mistakes === 0;
-      var correct = q.pairs.map(function (p) { return plain(p[0]) + " ← " + plain(p[1]); }).join(" | ");
-      log.push({ n: i + 1, q: q.q, ok: ok, chosen: ok ? "" : "أخطأت " + ar(mistakes) + " مرات أثناء الوصل", correct: correct, why: q.why });
-      feedback(card, ok, ok ? "" : "وصلت العناصر كلها في النهاية، لكن مع " + ar(mistakes) + " محاولات خاطئة، لذلك لا تُحسب النقطة.", q.why);
-      nextBtn(card, advance);
+      record(card, idx, { n: idx + 1, q: q.q, ok: ok, why: q.why }, ok ? "" : "وصلت العناصر كلها في النهاية، لكن مع " + ar(mistakes) + " محاولات خاطئة، لذلك لا تُحسب النقطة.");
     }
   }
 
   /* ---------- ترتيب ---------- */
-  function order(card, q) {
+  function order(card, q, idx) {
     var n = q.items.length;
     var items = q.items.map(function (t, k) { return { k: k, t: t }; });
     var pool = shuffle(items);
@@ -252,14 +317,14 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
     card.appendChild(el('<p class="hint">اضغط على العناصر بالترتيب الصحيح. اضغط على عنصر موضوع لإرجاعه.</p>'));
     var slots = el('<div class="slots"></div>'); card.appendChild(slots);
     var poolEl = el('<div class="pool"></div>'); card.appendChild(poolEl);
-    var chk = el('<button class="btn" disabled>تحقق من الترتيب</button>'); card.appendChild(chk);
+    var chk = el('<button class="btn" type="button" disabled>تحقق من الترتيب</button>'); card.appendChild(chk);
     function draw() {
       slots.replaceChildren();
       for (var s = 0; s < n; s++) {
         var o = placed[s];
         var slot = el('<div class="slot"><span class="n">' + ar(s + 1) + '</span></div>');
         if (o) {
-          var c = el('<button class="chip">' + fmt(o.t) + '</button>');
+          var c = el('<button class="chip" type="button">' + fmt(o.t) + '</button>');
           (function (o) { c.addEventListener("click", function () { if (locked) return; placed = placed.filter(function (x) { return x !== o; }); pool.push(o); draw(); }); })(o);
           slot.appendChild(c);
         }
@@ -267,7 +332,7 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
       }
       poolEl.replaceChildren();
       pool.forEach(function (o) {
-        var c = el('<button class="chip">' + fmt(o.t) + '</button>');
+        var c = el('<button class="chip" type="button">' + fmt(o.t) + '</button>');
         c.addEventListener("click", function () { if (locked) return; pool = pool.filter(function (x) { return x !== o; }); placed.push(o); draw(); });
         poolEl.appendChild(c);
       });
@@ -280,13 +345,11 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
       Array.prototype.forEach.call(slots.children, function (sl, k) { sl.classList.add(placed[k].k === k ? "ok" : "no"); });
       poolEl.remove();
       var correct = q.items.map(function (t, k) { return ar(k + 1) + ") " + plain(t); }).join("، ");
-      log.push({ n: i + 1, q: q.q, ok: ok, chosen: placed.map(function (o) { return plain(o.t); }).join("، "), correct: correct, why: q.why });
-      feedback(card, ok, ok ? "" : "الترتيب الصحيح: " + esc(correct), q.why);
-      nextBtn(card, advance);
+      record(card, idx, { n: idx + 1, q: q.q, ok: ok, why: q.why }, ok ? "" : "الترتيب الصحيح: " + esc(correct));
     });
   }
 
-  /* ---------- النتيجة ---------- */
+  /* ---------- النتيجة ومراجعة الأخطاء ---------- */
   function message(score, total, wrong) {
     var pct = Math.round(score / total * 100);
     var t = "السلام عليكم ورحمة الله.\nأنا: " + name + "\nالتمرين: الدرس " + META.no + " (" + META.lesson + ")\nنتيجتي: " + ar(score) + " من " + ar(total) + " (" + ar(pct) + "٪)";
@@ -294,25 +357,47 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
     return t;
   }
   function finish() {
+    finished = true; mode = "results"; navNext = null;
+    leaveBox.hidden = true;
+    reviewList = [];
+    res.forEach(function (r, k) { if (r && !r.ok) reviewList.push(k); });
+    if (!resultsNode) resultsNode = buildResults();
+    mount(resultsNode);
+    toTop();
+  }
+  function buildResults() {
     var total = qs.length;
-    var score = log.filter(function (l) { return l.ok; }).length;
-    var wrong = log.filter(function (l) { return !l.ok; });
+    var score = res.filter(function (r) { return r && r.ok; }).length;
+    var wrong = reviewList.map(function (k) { return res[k]; });
     var pct = score / total;
     var verdict = pct >= 0.9 ? "ممتاز، بارك الله فيك." : pct >= 0.7 ? "جيد جداً. راجع الأسئلة التي أخطأت فيها." : pct >= 0.5 ? "جيد. تحتاج إلى مراجعة الدرس ثم إعادة التمرين." : "راجع الدرس مع المعلم ثم أعد المحاولة.";
     var msg = message(score, total, wrong);
+    var wrap = flow();
+
     var card = el('<section class="card"><span class="qtype">انتهى التمرين</span>' +
       '<div class="score"><span class="big">' + ar(score) + '</span><span class="of">من ' + ar(total) + '</span></div>' +
       '<p class="qtext">' + esc(name) + '، ' + verdict + '</p></section>');
-    mount(card);
+    wrap.appendChild(card);
+
+    if (wrong.length) {
+      var rev = el('<section class="card"><h2>الأسئلة التي أخطأت فيها</h2>' +
+        '<p class="hint">اضغط على أي سؤال لتراجع إجابتك والإجابة الصحيحة والشرح.</p><div class="review"></div></section>');
+      var box = rev.querySelector(".review");
+      reviewList.forEach(function (idx, pos) {
+        var w = res[idx];
+        var b = el('<button class="wrow" type="button"><span class="rn">السؤال ' + ar(w.n) + '</span><span class="wq">' + fmt(w.q) + '</span></button>');
+        b.addEventListener("click", function () { review(pos); });
+        box.appendChild(b);
+      });
+      wrap.appendChild(rev);
+    }
 
     var send = el('<section class="card"><h2>أرسل نتيجتك إلى المعلم</h2>' +
       '<p class="hint">النتيجة لا تصل إلى المعلم تلقائياً. اضغط زر واتساب لإرسال الرسالة، أو انسخها وأرسلها بأي تطبيق.</p>' +
       '<textarea class="msg" id="msg" readonly></textarea>' +
       '<div class="actions"><a class="btn" id="wa" target="_blank" rel="noopener">إرسال عبر واتساب</a>' +
-      '<button class="btn ghost" id="cp">نسخ الرسالة</button></div></section>');
-    var wrap = el('<div style="display:flex;flex-direction:column;gap:16px"></div>');
-    wrap.appendChild(card); wrap.appendChild(send);
-    stage.replaceChildren(wrap);
+      '<button class="btn ghost" id="cp" type="button">نسخ الرسالة</button></div></section>');
+    wrap.appendChild(send);
     var ta = send.querySelector("#msg"); ta.value = msg;
     send.querySelector("#wa").href = "https://wa.me/" + (TEACHER_PHONE || "") + "?text=" + encodeURIComponent(msg);
     var cp = send.querySelector("#cp");
@@ -322,23 +407,34 @@ h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(msg).then(done, fallback); else fallback();
     });
 
-    if (wrong.length) {
-      var rev = el('<section class="card"><h2>مراجعة الأخطاء</h2><div class="review"></div></section>');
-      var box = rev.querySelector(".review");
-      wrong.forEach(function (w) {
-        box.appendChild(el('<div class="rev"><span class="rn">السؤال ' + ar(w.n) + '</span><p>' + fmt(w.q) + '</p>' +
-          (w.chosen ? '<p>إجابتك: ' + fmt(w.chosen) + '</p>' : "") +
-          '<p class="good">الصحيح: ' + fmt(w.correct) + '</p>' +
-          (w.why ? '<p>' + fmt(w.why) + '</p>' : "") + '</div>'));
-      });
-      wrap.appendChild(rev);
-    }
-    var again = el('<button class="btn ghost">إعادة التمرين</button>');
-    again.addEventListener("click", function () { qs = shuffle(DATA); i = 0; log = []; showQ(); });
+    var again = el('<button class="btn ghost" type="button">إعادة التمرين</button>');
+    again.addEventListener("click", function () { begin(true); });
     wrap.appendChild(again);
-    window.scrollTo({ top: 0 });
+    return wrap;
+  }
+  // مراجعة سؤال أخطأ فيه الطالب، مع التنقل بين الأسئلة الخاطئة فقط
+  function review(pos) {
+    mode = "review"; navNext = null;
+    var idx = reviewList[pos];
+    var wrap = flow();
+    wrap.appendChild(el('<div class="revbar"><span>مراجعة سؤال أخطأت فيه</span><span>' + ar(pos + 1) + ' من ' + ar(reviewList.length) + '</span></div>'));
+    wrap.appendChild(cards[idx]);
+    var bar = el('<div class="nav"><button class="btn ghost" type="button">السابق</button><button class="btn" type="button">التالي</button></div>');
+    var prev = bar.children[0], next = bar.children[1];
+    prev.disabled = pos === 0;
+    next.disabled = pos === reviewList.length - 1;
+    prev.addEventListener("click", function () { review(pos - 1); });
+    next.addEventListener("click", function () { review(pos + 1); });
+    wrap.appendChild(bar);
+    var back = el('<button class="btn ghost" type="button">العودة إلى النتيجة</button>');
+    back.addEventListener("click", function () { mode = "results"; mount(resultsNode); toTop(); });
+    wrap.appendChild(back);
+    mount(wrap);
+    toTop();
   }
 
   start();
 })();
 </script>
+
+</html>
