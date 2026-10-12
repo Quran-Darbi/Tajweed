@@ -1,0 +1,344 @@
+<title>تمارين المدود</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* التخطيط: عمود واحد ضيق للهاتف، بطاقة سؤال واحدة في كل مرة، شريط تقدم في الأعلى */
+:root {
+  --bg: #f1f4f7;
+  --surface: #ffffff;
+  --fg: #162033;
+  --muted: #566277;
+  --line: #d6dce6;
+  --accent: #1b6a65;
+  --accent-fg: #ffffff;
+  --accent-soft: #e1f0ee;
+  --good: #1b7a44;
+  --good-soft: #e0f3e8;
+  --bad: #b3261e;
+  --bad-soft: #fbe5e3;
+  --gold: #8f630a;
+  --font-display: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-body: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1521; --surface: #172030; --fg: #e8edf5; --muted: #9ba7ba; --line: #2a3548;
+    --accent: #4fc2b8; --accent-fg: #0a1a19; --accent-soft: #123130;
+    --good: #61d18c; --good-soft: #12301f; --bad: #ff8b82; --bad-soft: #3b1917; --gold: #e3b24d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1521; --surface: #172030; --fg: #e8edf5; --muted: #9ba7ba; --line: #2a3548;
+  --accent: #4fc2b8; --accent-fg: #0a1a19; --accent-soft: #123130;
+  --good: #61d18c; --good-soft: #12301f; --bad: #ff8b82; --bad-soft: #3b1917; --gold: #e3b24d;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.75;
+  direction: rtl; padding-inline: 16px; padding-block: 20px 40px;
+}
+.wrap { max-width: 640px; margin-inline: auto; display: flex; flex-direction: column; gap: 16px; }
+.head { display: flex; flex-direction: column; gap: 4px; }
+.kicker { font-size: 13px; letter-spacing: .04em; color: var(--gold); font-weight: 600; }
+h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.4; margin: 0; text-wrap: balance; font-weight: 700; }
+.sub { color: var(--muted); margin: 0; font-size: 15px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.ayah { font-family: var(--font-display); font-size: 1.28em; line-height: 1.9; color: var(--accent); font-weight: 400; }
+.qtext { font-size: 18px; font-weight: 500; line-height: 1.9; margin: 0; }
+.qtype { font-size: 12.5px; color: var(--muted); letter-spacing: .04em; }
+.bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .3s ease; }
+.meta { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+label.lbl { font-weight: 500; font-size: 15px; }
+input[type=text] { width: 100%; font: inherit; font-size: 17px; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); }
+input[type=text]:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+button, a.btn { font: inherit; cursor: pointer; }
+.btn { display: inline-flex; align-items: center; justify-content: center; text-align: center; gap: 8px; min-height: 48px; padding: 10px 20px; border-radius: 12px; border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-fg); font-weight: 600; font-size: 16px; text-decoration: none; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn:focus-visible, .opt:focus-visible, .chip:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { text-align: right; min-height: 52px; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); font-size: 17px; line-height: 1.7; }
+.opt:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+.opt.ok { border-color: var(--good); background: var(--good-soft); }
+.opt.no { border-color: var(--bad); background: var(--bad-soft); }
+.opt:disabled { cursor: default; }
+.tfrow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tfrow .opt { text-align: center; font-weight: 600; }
+.fb { border-radius: 12px; padding: 12px 14px; font-size: 15.5px; line-height: 1.85; }
+.fb.ok { background: var(--good-soft); color: var(--fg); border: 1px solid var(--good); }
+.fb.no { background: var(--bad-soft); color: var(--fg); border: 1px solid var(--bad); }
+.fb b { display: block; margin-bottom: 2px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+.cols .col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.chip { text-align: center; min-height: 48px; padding: 8px 10px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); font-size: 15.5px; line-height: 1.6; overflow-wrap: anywhere; }
+.chip.sel { border-color: var(--accent); background: var(--accent-soft); }
+.chip.done { border-color: var(--good); background: var(--good-soft); cursor: default; }
+.chip.shake { border-color: var(--bad); background: var(--bad-soft); }
+.chip:disabled { cursor: default; }
+.slots { display: flex; flex-direction: column; gap: 8px; }
+.slot { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 6px 12px; border: 1.5px dashed var(--line); border-radius: 12px; }
+.slot .n { width: 28px; height: 28px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 14px; font-weight: 600; flex: none; }
+.slot .chip { flex: 1; }
+.slot.ok { border-color: var(--good); } .slot.no { border-color: var(--bad); }
+.pool { display: flex; flex-wrap: wrap; gap: 8px; }
+.pool .chip { flex: 1 1 auto; }
+.hint { color: var(--muted); font-size: 14px; margin: 0; }
+.score { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.score .big { font-family: var(--font-display); font-size: 56px; line-height: 1.2; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.score .of { font-size: 20px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.review { display: flex; flex-direction: column; gap: 12px; }
+.rev { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.rev .rn { font-size: 13px; color: var(--bad); font-weight: 600; }
+.rev p { margin: 0; font-size: 15.5px; }
+.rev .good { color: var(--good); font-weight: 600; }
+.actions { display: flex; flex-direction: column; gap: 10px; }
+textarea.msg { width: 100%; min-height: 120px; font: inherit; font-size: 15px; line-height: 1.8; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); resize: vertical; }
+h2 { font-family: var(--font-display); font-size: 22px; margin: 0; font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+</style>
+
+<div class="wrap" id="app">
+  <header class="head">
+    <span class="kicker">الدرس ٥</span>
+    <h1>المدود</h1>
+  </header>
+  <div id="stage"></div>
+</div>
+
+<script>
+(function () {
+  var DATA = [{"t":"mcq","q":"ما معنى المد في الاصطلاح؟","o":["إطالة الصوت بحرف من حروف المد عند ملاقاته همزاً أو سكوناً","قطع الصوت عند آخر الآية","إخفاء الغنة","الإسراع في القراءة"],"a":0,"why":"المد في اللغة: الزيادة. وفي الاصطلاح: إطالة الصوت بحرف المد عند ملاقاته همزة أو سكوناً."},{"t":"mcq","q":"ما حروف المد؟","o":["الألف والواو والياء","الهمزة والهاء والعين","الباء والميم والفاء","اللام والراء والنون"],"a":0,"why":"حروف المد ثلاثة: الألف، والواو الساكنة المضموم ما قبلها، والياء الساكنة المكسور ما قبلها (يجمعها: نوحيها)."},{"t":"mcq","q":"ما شرط الياء لتكون حرف مد؟","o":["ساكنة ومكسور ما قبلها","ساكنة ومفتوح ما قبلها","متحركة ومكسور ما قبلها","مضموم ما قبلها"],"a":0,"why":"الياء حرف مد إذا كانت ساكنة وما قبلها مكسور، كالياء في «نَسْتَعِينُ». وإن كان ما قبلها مفتوحاً فهي حرف لين."},{"t":"mcq","q":"إلى كم قسم ينقسم المد؟","o":["أصلي (طبيعي) وفرعي","متصل ومنفصل فقط","قسم واحد","ثلاثة أقسام"],"a":0,"why":"ينقسم المد إلى: مد أصلي (طبيعي)، ومد فرعي (له سبب: همز أو سكون)."},{"t":"mcq","q":"ما مقدار المد الطبيعي؟","o":["حركتان","أربع حركات","ست حركات","حركة واحدة"],"a":0,"why":"المد الطبيعي مقداره حركتان، ولا يتوقف على سبب من همز أو سكون."},{"t":"mcq","q":"ما سبب المد الفرعي؟","o":["همز أو سكون","التنوين","الغنة","الشدة فقط"],"a":0,"why":"المد الفرعي سببه همزة أو سكون بعد حرف المد."},{"t":"tf","q":"المد المتصل والمنفصل والبدل سببها الهمز، أما اللازم والعارض واللين فسببها السكون.","o":["صح","خطأ"],"a":0,"why":"أنواع المد التي سببها الهمز: المتصل، والمنفصل، والبدل. وأنواع المد التي سببها السكون: اللازم، والعارض للسكون، واللين."},{"t":"mcq","q":"ما نوع المد في «جَاءَ» و«السَّمَاءِ»؟","o":["مد متصل","مد منفصل","مد بدل","مد لازم"],"a":0,"why":"حرف المد (الألف) والهمزة في كلمة واحدة، فهو مد متصل."},{"t":"mcq","q":"ما حكم المد المتصل ومقداره؟","o":["واجب: أربع أو خمس حركات وصلاً، وست حركات وقفاً","جائز: حركتان وصلاً وأربع حركات وقفاً","واجب: ست حركات وصلاً ووقفاً","جائز: حركة واحدة"],"a":0,"why":"المد المتصل واجب، ومقداره أربع أو خمس حركات في الوصل، وست حركات في الوقف."},{"t":"mcq","q":"ما نوع المد في «يَا» من قوله تعالى «يَا أَيُّهَا»؟","o":["مد منفصل","مد متصل","مد لازم","مد طبيعي فقط"],"a":0,"why":"حرف المد في آخر كلمة (يا)، والهمزة في أول الكلمة التي بعدها (أيها)، فهو مد منفصل، وهو جائز، ومقداره أربع أو خمس حركات، ويجوز فيه القصر (حركتان)."},{"t":"mcq","q":"ما مقدار المد المنفصل؟","o":["أربع أو خمس حركات، ويجوز حركتان","ست حركات فقط","حركتان فقط","حركة واحدة"],"a":0,"why":"المد المنفصل جائز: يُمد أربع أو خمس حركات، ويجوز فيه القصر بمقدار حركتين."},{"t":"mcq","q":"ما نوع المد في «ءَا» من كلمة «ءَامَنُوا»؟","o":["مد بدل","مد متصل","مد منفصل","مد لازم"],"a":0,"why":"جاءت الهمزة قبل حرف المد، فهو مد بدل، ومقداره حركتان."},{"t":"mcq","q":"ما نوع المد في «نَسْتَعِينُ» عند الوقف عليها؟","o":["مد عارض للسكون","مد لين","مد لازم","مد بدل"],"a":0,"why":"حرف المد (الياء) جاء بعده سكون عارض بسبب الوقف، فهو مد عارض للسكون، ويجوز فيه حركتان أو أربع أو ست."},{"t":"mcq","q":"ما نوع المد في «خَوْفٍ» عند الوقف عليها؟","o":["مد لين عارض للسكون","مد عارض للسكون","مد متصل","مد طبيعي"],"a":0,"why":"الواو ساكنة وما قبلها مفتوح، فهي حرف لين، وجاء بعدها سكون عارض للوقف. فهو مد لين عارض للسكون، ويجوز فيه حركتان أو أربع أو ست."},{"t":"mcq","q":"ما نوع المد في «الضَّالِّينَ»؟","o":["مد لازم كلمي مثقل","مد متصل","مد منفصل","مد عارض للسكون"],"a":0,"why":"جاء بعد حرف المد (الألف) حرف مشدد (اللام)، وسكونه أصلي لازم، فهو مد لازم كلمي مثقل."},{"t":"mcq","q":"ما مقدار المد اللازم؟","o":["ست حركات","حركتان","أربع حركات","خمس حركات"],"a":0,"why":"المد اللازم واجب، ومقداره ست حركات."},{"t":"mcq","q":"ما مد الصلة الصغرى في «لَهُ مَا فِي السَّمَاوَاتِ»؟","o":["مد هاء الضمير حركتين لأنها بين متحركين ولم يأتِ بعدها همزة","مد هاء الضمير ست حركات","مد متصل","لا مد فيها"],"a":0,"why":"هاء الضمير المضمومة أو المكسورة بين متحركين، وليس بعدها همزة قطع، تُمد حركتين، وتسمى صلة صغرى."},{"t":"mcq","q":"ما نوع المد في «مَالُهُ أَخْلَدَهُ»؟","o":["صلة كبرى، أربع أو خمس حركات","صلة صغرى، حركتان","مد لازم","مد بدل"],"a":0,"why":"جاء بعد هاء الضمير همزة قطع، فتُمد أربع أو خمس حركات، وتسمى صلة كبرى."},{"t":"match","q":"صِل كل نوع من المد بمثاله:","pairs":[["المتصل","«السَّمَاءِ»"],["المنفصل","«بِمَا أُنزِلَ»"],["البدل","«ءَامَنُوا»"],["اللازم","«الضَّالِّينَ»"],["العارض للسكون","«الْعَالَمِينَ» وقفاً"]],"why":"حدد أولاً حرف المد، ثم انظر إلى ما بعده: همزة في الكلمة نفسها، أو في الكلمة التالية، أو سكون لازم، أو سكون عارض."},{"t":"order","q":"رتّب أنواع المد من الأقل مقداراً إلى الأكثر مقداراً:","items":["المد الطبيعي","المد المتصل","المد اللازم"],"why":"الطبيعي حركتان، والمتصل أربع أو خمس، واللازم ست حركات."}];
+  var META = { title: "تمارين المدود", no: "٥", lesson: "المدود" };
+  // رقم واتساب المعلم بالصيغة الدولية بلا + (مثال: 32470123456). اتركه فارغاً ليختار الطالب جهة الإرسال بنفسه.
+  var TEACHER_PHONE = "";
+
+  var stage = document.getElementById("stage");
+  var name = "", qs = [], i = 0, log = [];
+
+  function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+  function fmt(s) { return esc(s).replace(/«([^»]+)»/g, '<span class="ayah">$1</span>'); }
+  function plain(s) { return String(s).replace(/[«»]/g, ""); }
+  function ar(n) { return String(n).replace(/\d/g, function (d) { return "٠١٢٣٤٥٦٧٨٩"[d]; }); }
+  function shuffle(a) { var b = a.slice(); for (var k = b.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = b[k]; b[k] = b[j]; b[j] = t; } return b; }
+  function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+  function mount(node) { stage.replaceChildren(node); }
+
+  /* ---------- البداية ---------- */
+  function start() {
+    var n = DATA.length;
+    var card = el(
+      '<section class="card">' +
+      '<p class="sub">' + ar(n) + ' سؤالاً في هذا الدرس، وتظهر الإجابة الصحيحة مع الشرح بعد كل سؤال. في آخر التمرين تُرسل نتيجتك إلى المعلم.</p>' +
+      '<div><label class="lbl" for="nm">اكتب اسمك</label>' +
+      '<input type="text" id="nm" autocomplete="name" placeholder="الاسم الكامل" maxlength="60"></div>' +
+      '<button class="btn" id="go" disabled>ابدأ التمرين</button>' +
+      '</section>'
+    );
+    mount(card);
+    var inp = card.querySelector("#nm"), go = card.querySelector("#go");
+    inp.addEventListener("input", function () { go.disabled = inp.value.trim().length < 2; });
+    inp.addEventListener("keydown", function (e) { if (e.key === "Enter" && !go.disabled) go.click(); });
+    go.addEventListener("click", function () {
+      name = inp.value.trim(); qs = DATA.slice(); i = 0; log = []; showQ();
+    });
+  }
+
+  /* ---------- شريط التقدم ---------- */
+  function top() {
+    return '<div><div class="meta"><span>السؤال ' + ar(i + 1) + ' من ' + ar(qs.length) + '</span><span>' + esc(name) + '</span></div>' +
+      '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + qs.length + '" aria-valuenow="' + i + '"><i style="width:' + (i / qs.length * 100) + '%"></i></div></div>';
+  }
+  function nextBtn(card, cb) {
+    var last = i === qs.length - 1;
+    var b = el('<button class="btn">' + (last ? "عرض النتيجة" : "السؤال التالي") + '</button>');
+    b.addEventListener("click", cb);
+    card.appendChild(b);
+    b.focus({ preventScroll: true });
+    b.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+  function advance() { i++; if (i >= qs.length) finish(); else showQ(); }
+  function feedback(card, ok, extra, why) {
+    var f = el('<div class="fb ' + (ok ? "ok" : "no") + '" role="status"><b>' + (ok ? "أحسنت، إجابة صحيحة" : "إجابة غير صحيحة") + '</b>' + (extra ? '<div>' + extra + '</div>' : "") + (why ? '<div>' + fmt(why) + '</div>' : "") + '</div>');
+    card.appendChild(f);
+  }
+
+  function showQ() {
+    var q = qs[i];
+    var typeLabel = { mcq: "اختيار من متعدد", tf: "صح أم خطأ", match: "وصل", order: "ترتيب" }[q.t];
+    var card = el('<section class="card">' + top() + '<span class="qtype">' + typeLabel + '</span><p class="qtext">' + fmt(q.q) + '</p></section>');
+    mount(card);
+    if (q.t === "mcq" || q.t === "tf") mcq(card, q);
+    else if (q.t === "match") match(card, q);
+    else order(card, q);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  /* ---------- اختيار من متعدد وصح/خطأ ---------- */
+  function mcq(card, q) {
+    var opts = q.o.map(function (t, k) { return { t: t, ok: k === q.a }; });
+    if (q.t === "mcq") opts = shuffle(opts);
+    var wrap = el('<div class="' + (q.t === "tf" ? "tfrow" : "opts") + '"></div>');
+    var btns = opts.map(function (o) {
+      var b = el('<button class="opt">' + fmt(o.t) + '</button>');
+      wrap.appendChild(b);
+      return b;
+    });
+    card.appendChild(wrap);
+    btns.forEach(function (b, k) {
+      b.addEventListener("click", function () {
+        btns.forEach(function (x, m) { x.disabled = true; if (opts[m].ok) x.classList.add("ok"); });
+        var ok = opts[k].ok;
+        if (!ok) b.classList.add("no");
+        var correct = opts.filter(function (o) { return o.ok; })[0].t;
+        log.push({ n: i + 1, q: q.q, ok: ok, chosen: opts[k].t, correct: correct, why: q.why });
+        feedback(card, ok, ok ? "" : 'الإجابة الصحيحة: ' + fmt(correct), q.why);
+        nextBtn(card, advance);
+      });
+    });
+  }
+
+  /* ---------- وصل ---------- */
+  function match(card, q) {
+    var n = q.pairs.length, done = 0, mistakes = 0, sel = null;
+    var L = q.pairs.map(function (p, k) { return { k: k, t: p[0] }; });
+    var R = shuffle(q.pairs.map(function (p, k) { return { k: k, t: p[1] }; }));
+    card.appendChild(el('<p class="hint">اضغط على عنصر من العمود الأول، ثم على ما يناسبه من العمود الثاني.</p>'));
+    var cols = el('<div class="cols"><div class="col" id="lc"></div><div class="col" id="rc"></div></div>');
+    card.appendChild(cols);
+    var lc = cols.querySelector("#lc"), rc = cols.querySelector("#rc");
+    var lb = L.map(function (o) { var b = el('<button class="chip">' + fmt(o.t) + '</button>'); b.dataset.k = o.k; lc.appendChild(b); return b; });
+    var rb = R.map(function (o) { var b = el('<button class="chip">' + fmt(o.t) + '</button>'); b.dataset.k = o.k; rc.appendChild(b); return b; });
+    lb.forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.classList.contains("done")) return;
+        lb.forEach(function (x) { x.classList.remove("sel"); });
+        b.classList.add("sel"); sel = b;
+      });
+    });
+    rb.forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.classList.contains("done") || !sel) return;
+        if (sel.dataset.k === b.dataset.k) {
+          sel.classList.remove("sel"); sel.classList.add("done"); b.classList.add("done");
+          sel.disabled = true; b.disabled = true; sel = null; done++;
+          if (done === n) finishMatch();
+        } else {
+          mistakes++; b.classList.add("shake");
+          setTimeout(function () { b.classList.remove("shake"); }, 600);
+        }
+      });
+    });
+    function finishMatch() {
+      var ok = mistakes === 0;
+      var correct = q.pairs.map(function (p) { return plain(p[0]) + " ← " + plain(p[1]); }).join(" | ");
+      log.push({ n: i + 1, q: q.q, ok: ok, chosen: ok ? "" : "أخطأت " + ar(mistakes) + " مرات أثناء الوصل", correct: correct, why: q.why });
+      feedback(card, ok, ok ? "" : "وصلت العناصر كلها في النهاية، لكن مع " + ar(mistakes) + " محاولات خاطئة، لذلك لا تُحسب النقطة.", q.why);
+      nextBtn(card, advance);
+    }
+  }
+
+  /* ---------- ترتيب ---------- */
+  function order(card, q) {
+    var n = q.items.length;
+    var items = q.items.map(function (t, k) { return { k: k, t: t }; });
+    var pool = shuffle(items);
+    var guard = 0;
+    while (guard++ < 10 && pool.every(function (o, k) { return o.k === k; })) pool = shuffle(items);
+    var placed = [], locked = false;
+    card.appendChild(el('<p class="hint">اضغط على العناصر بالترتيب الصحيح. اضغط على عنصر موضوع لإرجاعه.</p>'));
+    var slots = el('<div class="slots"></div>'); card.appendChild(slots);
+    var poolEl = el('<div class="pool"></div>'); card.appendChild(poolEl);
+    var chk = el('<button class="btn" disabled>تحقق من الترتيب</button>'); card.appendChild(chk);
+    function draw() {
+      slots.replaceChildren();
+      for (var s = 0; s < n; s++) {
+        var o = placed[s];
+        var slot = el('<div class="slot"><span class="n">' + ar(s + 1) + '</span></div>');
+        if (o) {
+          var c = el('<button class="chip">' + fmt(o.t) + '</button>');
+          (function (o) { c.addEventListener("click", function () { if (locked) return; placed = placed.filter(function (x) { return x !== o; }); pool.push(o); draw(); }); })(o);
+          slot.appendChild(c);
+        }
+        slots.appendChild(slot);
+      }
+      poolEl.replaceChildren();
+      pool.forEach(function (o) {
+        var c = el('<button class="chip">' + fmt(o.t) + '</button>');
+        c.addEventListener("click", function () { if (locked) return; pool = pool.filter(function (x) { return x !== o; }); placed.push(o); draw(); });
+        poolEl.appendChild(c);
+      });
+      chk.disabled = placed.length !== n;
+    }
+    draw();
+    chk.addEventListener("click", function () {
+      locked = true; chk.remove();
+      var ok = placed.every(function (o, k) { return o.k === k; });
+      Array.prototype.forEach.call(slots.children, function (sl, k) { sl.classList.add(placed[k].k === k ? "ok" : "no"); });
+      poolEl.remove();
+      var correct = q.items.map(function (t, k) { return ar(k + 1) + ") " + plain(t); }).join("، ");
+      log.push({ n: i + 1, q: q.q, ok: ok, chosen: placed.map(function (o) { return plain(o.t); }).join("، "), correct: correct, why: q.why });
+      feedback(card, ok, ok ? "" : "الترتيب الصحيح: " + esc(correct), q.why);
+      nextBtn(card, advance);
+    });
+  }
+
+  /* ---------- النتيجة ---------- */
+  function message(score, total, wrong) {
+    var pct = Math.round(score / total * 100);
+    var t = "السلام عليكم ورحمة الله.\nأنا: " + name + "\nالتمرين: الدرس " + META.no + " (" + META.lesson + ")\nنتيجتي: " + ar(score) + " من " + ar(total) + " (" + ar(pct) + "٪)";
+    t += wrong.length ? "\nالأسئلة التي أخطأت فيها: " + wrong.map(function (w) { return ar(w.n); }).join("، ") : "\nلم أخطئ في أي سؤال، والحمد لله.";
+    return t;
+  }
+  function finish() {
+    var total = qs.length;
+    var score = log.filter(function (l) { return l.ok; }).length;
+    var wrong = log.filter(function (l) { return !l.ok; });
+    var pct = score / total;
+    var verdict = pct >= 0.9 ? "ممتاز، بارك الله فيك." : pct >= 0.7 ? "جيد جداً. راجع الأسئلة التي أخطأت فيها." : pct >= 0.5 ? "جيد. تحتاج إلى مراجعة الدرس ثم إعادة التمرين." : "راجع الدرس مع المعلم ثم أعد المحاولة.";
+    var msg = message(score, total, wrong);
+    var card = el('<section class="card"><span class="qtype">انتهى التمرين</span>' +
+      '<div class="score"><span class="big">' + ar(score) + '</span><span class="of">من ' + ar(total) + '</span></div>' +
+      '<p class="qtext">' + esc(name) + '، ' + verdict + '</p></section>');
+    mount(card);
+
+    var send = el('<section class="card"><h2>أرسل نتيجتك إلى المعلم</h2>' +
+      '<p class="hint">النتيجة لا تصل إلى المعلم تلقائياً. اضغط زر واتساب لإرسال الرسالة، أو انسخها وأرسلها بأي تطبيق.</p>' +
+      '<textarea class="msg" id="msg" readonly></textarea>' +
+      '<div class="actions"><a class="btn" id="wa" target="_blank" rel="noopener">إرسال عبر واتساب</a>' +
+      '<button class="btn ghost" id="cp">نسخ الرسالة</button></div></section>');
+    var wrap = el('<div style="display:flex;flex-direction:column;gap:16px"></div>');
+    wrap.appendChild(card); wrap.appendChild(send);
+    stage.replaceChildren(wrap);
+    var ta = send.querySelector("#msg"); ta.value = msg;
+    send.querySelector("#wa").href = "https://wa.me/" + (TEACHER_PHONE || "") + "?text=" + encodeURIComponent(msg);
+    var cp = send.querySelector("#cp");
+    cp.addEventListener("click", function () {
+      var done = function () { cp.textContent = "تم النسخ"; setTimeout(function () { cp.textContent = "نسخ الرسالة"; }, 1800); };
+      var fallback = function () { ta.focus(); ta.select(); try { document.execCommand("copy"); done(); } catch (e) { cp.textContent = "حدّد الرسالة وانسخها يدوياً"; } };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(msg).then(done, fallback); else fallback();
+    });
+
+    if (wrong.length) {
+      var rev = el('<section class="card"><h2>مراجعة الأخطاء</h2><div class="review"></div></section>');
+      var box = rev.querySelector(".review");
+      wrong.forEach(function (w) {
+        box.appendChild(el('<div class="rev"><span class="rn">السؤال ' + ar(w.n) + '</span><p>' + fmt(w.q) + '</p>' +
+          (w.chosen ? '<p>إجابتك: ' + fmt(w.chosen) + '</p>' : "") +
+          '<p class="good">الصحيح: ' + fmt(w.correct) + '</p>' +
+          (w.why ? '<p>' + fmt(w.why) + '</p>' : "") + '</div>'));
+      });
+      wrap.appendChild(rev);
+    }
+    var again = el('<button class="btn ghost">إعادة التمرين</button>');
+    again.addEventListener("click", function () { qs = shuffle(DATA); i = 0; log = []; showQ(); });
+    wrap.appendChild(again);
+    window.scrollTo({ top: 0 });
+  }
+
+  start();
+})();
+</script>
